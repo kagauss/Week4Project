@@ -1,0 +1,37 @@
+---
+title: "Week4ProjectPrestentation"
+author: "kagauss"
+date: "December 6, 2017"
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
+---
+##Shiny Project App
+
+This app is used to predict a cars MPG based on the HP input of the user.  It is an interactive linear model regression that updates the red "predicted value" in a reactive manner.
+
+---
+
+The dataset is loaded into the app and a linear regression is performed using hp as the predictor varaible and mpg as the response variable.
+```{r}
+data("mtcars")
+fit <- lm(mpg~hp, data = mtcars)  
+```
+
+Ex. The user slides the bar in the app to hp = 100
+---
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+library(ggplot2)
+```
+
+```{r, echo=FALSE, message=FALSE}
+p <- ggplot(data = mtcars, aes(x = hp, y = mpg))+geom_point()+geom_smooth(method = "lm")+
+    geom_point(size = 5, color = "red", aes(x=100, y=coef(fit)[1] + 100 * coef(fit)[2]))
+      
+ggplotly(p)
+```
+
+---
+
+The app can be further expanded upon by adding addtional predictor variables for a more accurate prediction on a cars MPG.
